@@ -26,7 +26,7 @@ else
 fi
 
 if $circle; then 
-    cd $dir"48x48/apps" || exit
+    cd $dir"48/apps" || exit
     ln -sf calendar-blue-"$day".svg google-calendar.svg
     ln -sf calendar-purple-"$day".svg ms-calendar.svg
     ln -sf calendar-red-"$day".svg office-calendar.svg
