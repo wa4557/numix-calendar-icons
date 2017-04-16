@@ -5,41 +5,60 @@ day=$(date +'%d')
 cuser="${SUDO_USER:-$USER}"
 circle=true
 if [ -d /home/"$cuser"/.local/share/icons/Numix-Circle/ ]; then
-    dir=/home/"$cuser"/.local/share/icons/Numix-Circle/
+    dircircle=/home/"$cuser"/.local/share/icons/Numix-Circle/
 elif [ -d /home/"$cuser"/.icons/Numix-Circle/ ]; then
-    dir=/home/"$cuser"/.icons/Numix-Circle/
+    dircircle=/home/"$cuser"/.icons/Numix-Circle/
 elif [ -d /usr/share/icons/Numix-Circle/ ]; then
-     dir=/usr/share/icons/Numix-Circle/
+     dircircle=/usr/share/icons/Numix-Circle/
 else
     circle=false
 fi
 
+square=true
+if [ -d /home/"$cuser"/.local/share/icons/Numix-Square/ ]; then
+    dirsquare=/home/"$cuser"/.local/share/icons/Numix-Square/
+elif [ -d /home/"$cuser"/.icons/Numix-Square/ ]; then
+    dirsquare=/home/"$cuser"/.icons/Numix-Square/
+elif [ -d /usr/share/icons/Numix-Square/ ]; then
+     dirsquare=/usr/share/icons/Numix-Square/
+else
+    square=false
+fi
+
 base=true
 if [ -d /home/"$cuser"/.local/share/icons/Numix/ ]; then
-    dir2=/home/"$cuser"/.local/share/icons/Numix
+    dirbase=/home/"$cuser"/.local/share/icons/Numix
 elif [ -d /home/"$cuser"/.icons/Numix/ ]; then
-    dir2=/home/"$cuser"/.icons/Numix/
+    dirbase=/home/"$cuser"/.icons/Numix/
 elif [ -d /usr/share/icons/Numix/ ]; then
-     dir2=/usr/share/icons/Numix/
+     dirbase=/usr/share/icons/Numix/
 else
     base=false
 fi
 
 if $circle; then 
-    cd $dir"48/apps" || exit
+    cd $dircircle"48/apps" || exit
     ln -sf calendar-blue-"$day".svg google-calendar.svg
     ln -sf calendar-purple-"$day".svg ms-calendar.svg
     ln -sf calendar-red-"$day".svg office-calendar.svg
-    gtk-update-icon-cache --force $dir
+    gtk-update-icon-cache --force $dircircle
+fi
+
+if $square; then 
+    cd $dirsquare"48/apps" || exit
+    ln -sf calendar-blue-"$day".svg google-calendar.svg
+    ln -sf calendar-purple-"$day".svg ms-calendar.svg
+    ln -sf calendar-red-"$day".svg office-calendar.svg
+    gtk-update-icon-cache --force $dirsquare
 fi
 
 if $base; then 
-    cd $dir2 || exit
+    cd $dirbase || exit
     places=$(find . -name "places" -type d)
     for place in $places
         do
-            cd "$dir2$place" || exit
+            cd "$dirbase$place" || exit
             ln -sf calendar-"$day".svg calendar.svg
         done
-    gtk-update-icon-cache --force $dir2
+    gtk-update-icon-cache --force $dirbase
 fi
